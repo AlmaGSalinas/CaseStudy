@@ -1,0 +1,26 @@
+#buttonText {
+    background-color: #054288;
+    border-color: white;
+    color: white;
+    border-radius: 5px;
+    width: 155px;
+    font-size: 15px;
+}
+
+#buttonText:hover {
+    background-color: white;
+    color: #054288;
+    border-radius: 5px;
+}
+
+.imgTitle {
+    width: 70%;
+}
+
+.title {
+    font-size: 600%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #439AFF;
+    text-align: center;
+    display: relative;
+}
