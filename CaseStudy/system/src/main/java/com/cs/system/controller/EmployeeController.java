@@ -17,7 +17,12 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
-	@RequestMapping ("/")
+	@RequestMapping ({"/","/menu"})
+	public String Menu(){
+		return "menu";
+	}
+	
+	@RequestMapping ("/EmployeeControl")
 	public String EmployeeListing(Model mod,  @Param("FN") String FN) {
 		List<Employee> EmployeeList = service.EmployeeListAll(FN);
 	

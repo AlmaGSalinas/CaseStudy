@@ -31,7 +31,7 @@
 
         <br>
 
-        <form class="input-group my-lg-2 mb-3" th:action="@{/}">
+        <form class="input-group my-lg-2 mb-3" th:action="@{/EmployeeControl}">
             <input class="form-control mr-sm-2" type="text" name="FN" placeholder="First Name" aria-label="SearchName" id="FN" th:value="${FN}" required>
 
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
@@ -82,7 +82,7 @@
 
     <script type="text/javascript ">
         function ClearSearch() {
-            window.location = "/ ";
+            window.location = "/EmployeeControl";
         }
     </script>
 </body>
