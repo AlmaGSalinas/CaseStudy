@@ -1,5 +1,7 @@
 package com.cs.system.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,41 @@ public class EmployeeService{
 
 	
 	//Obtiene la lista de los empleados
-	public List<Employee> EmployeeListAll(String FN) {
-		if(FN != null){
-			return repo.findAll(FN);
+	public List<Employee> EmployeeListAll(String keyword) {
+		if(keyword != null){
+			return repo.findAll(keyword);
 		}
 		return repo.findAll();
+		
 	}
 	
 	// guarda los cambios de la modificacion de un empleado
 	public Employee saveEmployee(Employee employee) {
+	
+		
+
 		return repo.save(employee);
 	}
+
+	/*	if(FN!=null || MN!=null && LN!=null && BD!=null ){
+
+			if(FN.equals(employee.getFirstname())&&(MN.equals(employee.getMiddlename())&& (LN.equals(employee.getLastname())) && (BD.equals(employee.getBirthdate())))){
+
+			}*/
+		/*int value;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		 String date = BD;
+		 LocalDate localDate = LocalDate.parse(date, formatter);
+
+		 if(BD!=null){
+		 if (localDate.isBefore(LocalDate.now())) {
+			value=1;
+			return repo.save(employee);
+		 }
+		 else{
+			value=0;
+		 }*/
+	
 	
 	//Obtiene el ID de los empleados
 	public Employee getEmployeeId(int id) {
@@ -38,5 +64,10 @@ public class EmployeeService{
 	public void deleteEmployee(int id) {
 		repo.deleteById(id);
 	}
+
+	//evalua la fecha de nacimiento 
+	public void valueBirhtDate(String BD){
+	
+}
 
 }

@@ -23,11 +23,11 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping ("/EmployeeControl")
-	public String EmployeeListing(Model mod,  @Param("FN") String FN) {
-		List<Employee> EmployeeList = service.EmployeeListAll(FN);
+	public String EmployeeListing(Model mod,  @Param("keyword") String keyword) {
+		List<Employee> EmployeeList = service.EmployeeListAll(keyword);
 	
 		mod.addAttribute("EmployeeList", EmployeeList);
-		mod.addAttribute("FN", FN);
+		mod.addAttribute("keyword", keyword);
 		return "show_employees"; // return show_employees.htlm
 	}
 
@@ -40,6 +40,7 @@ public class EmployeeController {
 
 	@RequestMapping(value= "/SaveEmployee", method= RequestMethod.POST)
 	public String SaveEmployee(@ModelAttribute("employee") Employee emp) {
+		
 		service.saveEmployee(emp);
 
 		return "redirect:/";

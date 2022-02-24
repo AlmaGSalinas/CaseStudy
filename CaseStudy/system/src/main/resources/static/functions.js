@@ -10,7 +10,7 @@ function deleteEmp(id) {
         .then((OK) => {
             if (OK) {
                 $.ajax({
-                    url: "/delete/" + id,
+                    url: "/deleteEmployee/" + id,
                     success: function(res) {
                         console.log(res);
                     },
@@ -19,7 +19,7 @@ function deleteEmp(id) {
                     icon: "success",
                 }).then((ok) => {
                     if (ok) {
-                        location.href = "/employees";
+                        location.href = "/EmployeeControl";
                     }
                 });
             } else {}
