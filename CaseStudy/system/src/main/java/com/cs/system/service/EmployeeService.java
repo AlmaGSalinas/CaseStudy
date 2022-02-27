@@ -16,23 +16,25 @@ public class EmployeeService{
 	@Autowired
 	private EmployeeRepository repo;
 
+	//find an employee 
+	public List<Employee>searchEmployee(String FN, String LN, String PO){
+		return repo.searchEmployee(FN, LN, PO);
+	}
 	
-	//Obtiene la lista de los empleados
-	public List<Employee> EmployeeListAll(String keyword) {
-		if(keyword != null){
-			return repo.findAll(keyword);
-		}
+	//show the list of all employees in the DB
+	public List<Employee> EmployeeListAll() {
+		/*if(FN != null ){
+			return repo.findAll(FN);
+		} */
 		return repo.findAll();
 		
 	}
 	
-	// guarda los cambios de la modificacion de un empleado
+	// save de modify information of an employee
 	public Employee saveEmployee(Employee employee) {
-	
-		
-
 		return repo.save(employee);
 	}
+
 
 	/*	if(FN!=null || MN!=null && LN!=null && BD!=null ){
 
@@ -54,20 +56,13 @@ public class EmployeeService{
 		 }*/
 	
 	
-	//Obtiene el ID de los empleados
+	//Obtain the ID of the employees
 	public Employee getEmployeeId(int id) {
 		return repo.findById(id).get();
 	}
 
-	//Elimina empleados de la BD
-
+	//Delete an employee
 	public void deleteEmployee(int id) {
 		repo.deleteById(id);
 	}
-
-	//evalua la fecha de nacimiento 
-	public void valueBirhtDate(String BD){
-	
-}
-
 }

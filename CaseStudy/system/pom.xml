@@ -65,6 +65,7 @@
      <artifactId>oracle</artifactId>
      <version>3.12.3-RELEASE</version>
    </dependency>
+   
  </dependencies>
 
 	<build>

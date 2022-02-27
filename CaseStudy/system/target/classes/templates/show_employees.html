@@ -32,7 +32,10 @@
         <br>
 
         <form class="input-group my-lg-2 mb-3" th:action="@{/EmployeeControl}">
-            <input class="form-control mr-sm-2" type="text" name="keyword" aria-label="SearchName" id="keyword" th:value="${keyword}" required>
+            <input class="form-control mr-sm-2" type="text" name="FN" placeholder="First Name" aria-label="SearchName" id="FN" th:value="${FN}">
+            <input class="form-control mr-sm-2" type="text" name="LN" placeholder="Last Name" aria-label="SearchName" id="LN" th:value="${LN}">
+            <input class="form-control mr-sm-2" type="text" name="PO" placeholder="Position" aria-label="SearchName" id="PO" th:value="${PO}">
+
 
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
             <button class="btn btn-outline-danger my-2 my-sm-0" type="button" th:onclick="ClearSearch()"> <i class=" fas fa-trash "></i></button>

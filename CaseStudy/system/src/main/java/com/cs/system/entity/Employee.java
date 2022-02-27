@@ -21,8 +21,7 @@ public class Employee {
 
 		@Column(name = "Middlename",nullable = true,length = 50)
 		private String Middlename;
-
-		
+	
 		@Column(name = "Lastname",nullable = false,length = 50)
 		private String Lastname;
 		

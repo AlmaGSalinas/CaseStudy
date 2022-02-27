@@ -5,11 +5,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cs.system.service.EmployeeService;
 import com.cs.system.entity.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 @Controller
 public class EmployeeController {
@@ -23,11 +29,13 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping ("/EmployeeControl")
-	public String EmployeeListing(Model mod,  @Param("keyword") String keyword) {
-		List<Employee> EmployeeList = service.EmployeeListAll(keyword);
-	
-		mod.addAttribute("EmployeeList", EmployeeList);
-		mod.addAttribute("keyword", keyword);
+	public String searchEmp(Model mod, String FN, String LN, String PO) {
+		try{
+			List<Employee> EmployeeList = service.searchEmployee(FN, LN, PO);	
+				mod.addAttribute("EmployeeList", EmployeeList);
+		}catch(Exception ex){
+			System.out.println(ex);
+		} 
 		return "show_employees"; // return show_employees.htlm
 	}
 
@@ -40,11 +48,26 @@ public class EmployeeController {
 
 	@RequestMapping(value= "/SaveEmployee", method= RequestMethod.POST)
 	public String SaveEmployee(@ModelAttribute("employee") Employee emp) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String BD = emp.getBirthdate();
+		java.util.Date obj = new java.util.Date();
+		LocalDate date = LocalDate.parse(BD, formatter);
 		
+
 		service.saveEmployee(emp);
 
 		return "redirect:/";
 	}
+
+	
+/*@RequestMapping(value= "/SaveEmployee", method= RequestMethod.POST)
+	public String SaveEmployee(@ModelAttribute("employee") Employee emp) {
+		
+		service.saveEmployee(emp);
+
+		return "redirect:/";
+	}*/
+
 
 	@RequestMapping("/ModifyEmployee/{id}")
 	public ModelAndView ShowEditFormEmployee(@PathVariable(name = "id") Integer id) {
