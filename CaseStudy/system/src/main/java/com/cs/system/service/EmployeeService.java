@@ -33,27 +33,19 @@ public class EmployeeService{
 	// save de modify information of an employee
 	public Employee saveEmployee(Employee employee) {
 		return repo.save(employee);
+	
 	}
 
+	public Boolean verifyExists (Employee emp){
+		String FN = emp.getFirstname();
+		String MN = emp.getMiddlename();
+		String LN = emp.getLastname();
+		String BD = emp.getBirthdate();
 
-	/*	if(FN!=null || MN!=null && LN!=null && BD!=null ){
-
-			if(FN.equals(employee.getFirstname())&&(MN.equals(employee.getMiddlename())&& (LN.equals(employee.getLastname())) && (BD.equals(employee.getBirthdate())))){
-
-			}*/
-		/*int value;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		 String date = BD;
-		 LocalDate localDate = LocalDate.parse(date, formatter);
-
-		 if(BD!=null){
-		 if (localDate.isBefore(LocalDate.now())) {
-			value=1;
-			return repo.save(employee);
-		 }
-		 else{
-			value=0;
-		 }*/
+		return false;
+	}
+	
+	
 	
 	
 	//Obtain the ID of the employees

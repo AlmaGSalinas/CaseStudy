@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cs.system.service.EmployeeService;
 import com.cs.system.entity.*;
@@ -47,16 +48,26 @@ public class EmployeeController {
 	}
 
 	@RequestMapping(value= "/SaveEmployee", method= RequestMethod.POST)
-	public String SaveEmployee(@ModelAttribute("employee") Employee emp) {
+	public String SaveEmployee(@ModelAttribute("employee") @Validated Employee emp, RedirectAttributes rediAtt) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String BD = emp.getBirthdate();
 		java.util.Date obj = new java.util.Date();
 		LocalDate date = LocalDate.parse(BD, formatter);
 		
-
-		service.saveEmployee(emp);
-
-		return "redirect:/";
+		 if (date.isBefore(LocalDate.now())) {
+			if(service.verifyExists(emp)!=true){
+				service.saveEmployee(emp);
+				//the employee isn't in the DB
+				return "redirect:/menu?success";
+			}else{
+				//the employee exists in the BD
+				return "redirect:/menu?errorEmployeeExists";
+			}
+			
+		 }else{
+			 //Birthdate invalid
+		return "redirect:/menu?errorBirthdate";	
+		}
 	}
 
 	

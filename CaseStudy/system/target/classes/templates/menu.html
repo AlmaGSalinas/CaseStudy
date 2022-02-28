@@ -27,12 +27,20 @@
         </div>
     </nav>
 
-    <!--<div class="container ">-->
+    <!--Alerts-->
+    <div th:if=${param.success}>
+        <div class="alert alert-info">The information was successfully added to the system</div>
+    </div>
 
+    <div th:if=${param.errorBirthdate}>
+        <div class="alert alert-danger">Invalid birthdate </div>
+    </div>
 
+    <div th:if=${param.errorEmployeeExists}>
+        <div class="alert alert-danger">The employee is already exists </div>
+    </div>
 
-
-
+    <!--Carousel-->
     <div id="carousel1" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
