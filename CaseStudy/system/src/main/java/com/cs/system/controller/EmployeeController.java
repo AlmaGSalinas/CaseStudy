@@ -55,7 +55,7 @@ public class EmployeeController {
 		LocalDate date = LocalDate.parse(BD, formatter);
 		
 		 if (date.isBefore(LocalDate.now())) {
-			if(service.verifyExists(emp)!=true){
+			if(service.verifyExists(emp)==false){
 				service.saveEmployee(emp);
 				//the employee isn't in the DB
 				return "redirect:/menu?success";

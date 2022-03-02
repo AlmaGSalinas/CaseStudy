@@ -35,19 +35,6 @@ public class EmployeeService{
 		return repo.save(employee);
 	
 	}
-
-	public Boolean verifyExists (Employee emp){
-		String FN = emp.getFirstname();
-		String MN = emp.getMiddlename();
-		String LN = emp.getLastname();
-		String BD = emp.getBirthdate();
-
-		return false;
-	}
-	
-	
-	
-	
 	//Obtain the ID of the employees
 	public Employee getEmployeeId(int id) {
 		return repo.findById(id).get();
@@ -57,4 +44,19 @@ public class EmployeeService{
 	public void deleteEmployee(int id) {
 		repo.deleteById(id);
 	}
+
+	public Boolean verifyExists (Employee emp){
+		String firstname = emp.getFirstname();
+		String middlename = emp.getMiddlename();
+		String lastname = emp.getLastname();
+		String birthdate = emp.getBirthdate();
+		Employee objEmp =repo.findEmployeeByFirstnameAndMiddlenameAndLastnameAndBirthdate(firstname, middlename, lastname, birthdate);
+
+		if(objEmp!=null){
+			return true;
+		}else{
+			return false;
+		}
+		
+}
 }

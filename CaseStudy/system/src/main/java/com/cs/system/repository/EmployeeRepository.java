@@ -7,29 +7,25 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import javax.websocket.Session;
-
 import com.cs.system.entity.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Integer> {
 
-   
-   /* @Query("SELECT p FROM Employee WHERE p.Firstname LIKE %?1%")
-    public List <Employee> findAll(String FN); */
-
     //Find an employee in the DB
     @Query(value = "SELECT * FROM Employee"
-    + " WHERE (Firstname = :FN OR :FN = '')"
-    + " AND (Lastname = :LN OR :LN = '')"
-    + " AND (Position = :PO OR :PO = '')", nativeQuery = true)
-    List<Employee> searchEmployee(@Param("Firstname") String FN,  @Param("Lastname")String LN, @Param("Position")String PO);
+    + " WHERE (firstname = :FN OR :FN = '')"
+    + " AND (lastname = :LN OR :LN = '')"
+    + " AND (position = :PO OR :PO = '')", nativeQuery = true)
+    List<Employee> searchEmployee(@Param("firstname") String FN,  @Param("lastname")String LN, @Param("position")String PO);
    
-  /*  @Query(value = "SELECT Firstname, MiddleName, Lastname, Birthdate FROM Employees"
+    Employee findEmployeeByFirstnameAndMiddlenameAndLastnameAndBirthdate(String firstname, String middlename, String lastname, String birthdate);
+   /*
+    @Query(value = "SELECT Firstname, MiddleName, Lastname, Birthdate FROM Employees"
     + " WHERE (Firstname = :FN)"
     + " AND (Middlename = :MN)"
     + " AND (Lastname = :LN)"
     + " AND (Birthdate = :BD)", nativeQuery = true)
-    List<Employee> verifyExists(@Param("Firstname") String FN, @Param("Middlname") String MN, @Param("Lastname") String LN, @Param("Birthdate")String BD);
-*/
+    List<Employee> obtainInfo(@Param("Firstname") String FN, @Param("Middlname") String MN, @Param("Lastname") String LN, @Param("Birthdate")String BD);
+    */
 }

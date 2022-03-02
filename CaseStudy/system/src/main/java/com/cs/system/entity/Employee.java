@@ -17,39 +17,37 @@ public class Employee {
 		private int id;
 		
 		@Column(name = "Firstname",nullable = false,length = 50)
-		private String Firstname;
+		private String firstname;
 
 		@Column(name = "Middlename",nullable = true,length = 50)
-		private String Middlename;
+		private String middlename;
 	
 		@Column(name = "Lastname",nullable = false,length = 50)
-		private String Lastname;
+		private String lastname;
 		
 		@Column(name = "Birthdate",nullable = false, length = 10)
-		private String Birthdate;
+		private String birthdate;
 
 		@Column (name = "Position", nullable = false, length = 50)
-		private String Position;
+		private String position;
 
 		//Empty constructor
 		public Employee() {
 			
 		}
-		
+
 		//Constructor with ID
 		public Employee(int id, String firstname, String middlename, String lastname, String birthdate,
-				String position) {
-			super();
-			this.id = id;
-			Firstname = firstname;
-			Middlename = middlename;
-			Lastname = lastname;
-			Birthdate = birthdate;
-			Position = position;
-		}
+		String position) {
+		this.id = id;
+		this.firstname = firstname;
+		this.middlename = middlename;
+		this.lastname = lastname;
+		this.birthdate = birthdate;
+		this.position = position;
+}
 		
 		//Getters y setters
-
 		public int getId() {
 			return id;
 		}
@@ -59,48 +57,44 @@ public class Employee {
 		}
 
 		public String getFirstname() {
-			return Firstname;
+			return firstname;
 		}
 
 		public void setFirstname(String firstname) {
-			Firstname = firstname;
+			this.firstname = firstname;
 		}
 
 		public String getMiddlename() {
-			return Middlename;
+			return middlename;
 		}
 
 		public void setMiddlename(String middlename) {
-			Middlename = middlename;
+			this.middlename = middlename;
 		}
 
 		public String getLastname() {
-			return Lastname;
+			return lastname;
 		}
 
 		public void setLastname(String lastname) {
-			Lastname = lastname;
+			this.lastname = lastname;
 		}
 
 		public String getBirthdate() {
-			return Birthdate;
+			return birthdate;
 		}
 
 		public void setBirthdate(String birthdate) {
-			Birthdate = birthdate;
+			this.birthdate = birthdate;
 		}
 
 		public String getPosition() {
-			return Position;
+			return position;
 		}
 
 		public void setPosition(String position) {
-			Position = position;
+			this.position = position;
 		}
-
-	
 		
-		
-	
-
 }
+		
