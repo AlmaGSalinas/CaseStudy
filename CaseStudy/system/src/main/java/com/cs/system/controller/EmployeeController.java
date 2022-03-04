@@ -70,17 +70,7 @@ public class EmployeeController {
 		}
 	}
 
-	
-/*@RequestMapping(value= "/SaveEmployee", method= RequestMethod.POST)
-	public String SaveEmployee(@ModelAttribute("employee") Employee emp) {
-		
-		service.saveEmployee(emp);
-
-		return "redirect:/";
-	}*/
-
-
-	@RequestMapping("/ModifyEmployee/{id}")
+	@RequestMapping(value= "/ModifyEmployee/{id}")
 	public ModelAndView ShowEditFormEmployee(@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("modify_employee");
 		Employee emp = service.getEmployeeId(id);
@@ -92,6 +82,14 @@ public class EmployeeController {
 	public String DeleteEmployee(@PathVariable(name = "id") Integer id){
 		service.deleteEmployee(id);
 		return "redirect:/";
+	}
+
+	@RequestMapping ("/MenuCompensation/{id}")
+	public ModelAndView MenuCompensation(@PathVariable(name = "id") Integer id) {
+		ModelAndView modelAV = new ModelAndView("menu_compensation");
+		Employee emp = service.getEmployeeId(id);
+		modelAV.addObject("employee", emp);
+		return modelAV;
 	}
 
 }
