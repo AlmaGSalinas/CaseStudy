@@ -92,5 +92,23 @@ public class EmployeeController {
 		return modelAV;
 	}
 
+
+	@RequestMapping ("/AddCompensation/{id}")
+	public ModelAndView AddCompensation(@PathVariable(name = "id") Integer id) {
+		ModelAndView modelAV = new ModelAndView("add_compensation");
+		Employee emp = service.getEmployeeId(id);
+		modelAV.addObject("employee", emp);
+		return modelAV;
+
 }
 
+@RequestMapping ("/ViewCompensation/{id}")
+public ModelAndView viewCompensation(@PathVariable(name = "id") Integer id) {
+	ModelAndView modelAV = new ModelAndView("add_compensation");
+	Employee emp = service.getEmployeeId(id);
+	modelAV.addObject("employee", emp);
+	return modelAV;
+
+
+}
+}

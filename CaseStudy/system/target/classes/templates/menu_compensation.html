@@ -20,8 +20,8 @@
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
-                <a id="buttonText" class="btn mr-2"> Add compensation </a>
-                <a id="buttonText" class="btn mr-2"> View compensation </a>
+                <a id="buttonText" th:href="@{ '/AddCompensation/' + ${employee.id}}" class="btn mr-2"> Add Compesation </a>
+                <a id="buttonText" th:href="@{'/ViewCompensation/' + ${employee.id}}" class="btn mr-2"> View Compensations </a>
                 <a id="buttonText" th:href="@{/EmployeeControl}" class="btn mr-2"> Back to employee control </a>
 
             </ul>
