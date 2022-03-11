@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cs.system.service.CompensationService;
 import com.cs.system.service.EmployeeService;
 import com.cs.system.entity.*;
 
@@ -23,7 +24,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService service;
+    private CompensationService ComService; 
 
+	//Employees 
 	@RequestMapping ({"/","/menu"})
 	public String Menu(){
 		return "menu";
@@ -84,6 +87,7 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 
+	//Compensations
 	@RequestMapping ("/MenuCompensation/{id}")
 	public ModelAndView MenuCompensation(@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("menu_compensation");
@@ -92,23 +96,31 @@ public class EmployeeController {
 		return modelAV;
 	}
 
-
 	@RequestMapping ("/AddCompensation/{id}")
-	public ModelAndView AddCompensation(@PathVariable(name = "id") Integer id) {
+	public ModelAndView AddCompensationForm(@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("add_compensation");
 		Employee emp = service.getEmployeeId(id);
 		modelAV.addObject("employee", emp);
 		return modelAV;
+	}
 
-}
+    @RequestMapping ("/CompensationHistory/{id}")
+    public ModelAndView vieCompensation (@PathVariable(name = "id") Integer id) {
+		ModelAndView modelAV = new ModelAndView("view_compensation");
+		Employee emp = service.getEmployeeId(id);
+		modelAV.addObject("employee", emp);
+		return modelAV;
+	}
+	
+	@RequestMapping ("/deleteCompensation/{id}")
+	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
+		ComService.deleteCompensation(id);
+		return "redirect:/";
+		}
 
-@RequestMapping ("/ViewCompensation/{id}")
-public ModelAndView viewCompensation(@PathVariable(name = "id") Integer id) {
-	ModelAndView modelAV = new ModelAndView("add_compensation");
-	Employee emp = service.getEmployeeId(id);
-	modelAV.addObject("employee", emp);
-	return modelAV;
-
-
-}
+	@RequestMapping(value= "/SaveCompensation", method= RequestMethod.POST)
+		public String saveCompensation(@ModelAttribute("compensation") @Validated Compensation comp, RedirectAttributes rediAtt) {
+		ComService.saveCompensation(comp);
+		return "redirect:/" ;
+		}
 }
