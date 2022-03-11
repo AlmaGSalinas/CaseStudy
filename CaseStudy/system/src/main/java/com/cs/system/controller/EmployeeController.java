@@ -96,6 +96,14 @@ public class EmployeeController {
 		return modelAV;
 	}
 
+	@RequestMapping ("/ModifyCompensation/{id}")
+	public ModelAndView ModifyCompensationForm(@PathVariable(name = "id") Integer id) {
+		ModelAndView modelAV = new ModelAndView("modify_compensation");
+		Employee emp = service.getEmployeeId(id);
+		modelAV.addObject("employee", emp);
+		return modelAV;
+	}
+
 	@RequestMapping ("/AddCompensation/{id}")
 	public ModelAndView AddCompensationForm(@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("add_compensation");
@@ -103,6 +111,8 @@ public class EmployeeController {
 		modelAV.addObject("employee", emp);
 		return modelAV;
 	}
+
+
 
     @RequestMapping ("/CompensationHistory/{id}")
     public ModelAndView vieCompensation (@PathVariable(name = "id") Integer id) {
