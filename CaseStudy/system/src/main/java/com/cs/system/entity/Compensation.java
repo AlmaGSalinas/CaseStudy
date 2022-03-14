@@ -27,7 +27,7 @@ public class Compensation {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
-    @Column(name = "date", nullable = false, length = 100)
+    @Column(name = "date", nullable = false, length = 10)
     private String date;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

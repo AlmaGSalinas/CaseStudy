@@ -96,24 +96,6 @@ public class EmployeeController {
 		return modelAV;
 	}
 
-	@RequestMapping ("/ModifyCompensation/{id}")
-	public ModelAndView ModifyCompensationForm(@PathVariable(name = "id") Integer id) {
-		ModelAndView modelAV = new ModelAndView("modify_compensation");
-		Employee emp = service.getEmployeeId(id);
-		modelAV.addObject("employee", emp);
-		return modelAV;
-	}
-
-	@RequestMapping ("/AddCompensation/{id}")
-	public ModelAndView AddCompensationForm(@PathVariable(name = "id") Integer id) {
-		ModelAndView modelAV = new ModelAndView("add_compensation");
-		Employee emp = service.getEmployeeId(id);
-		modelAV.addObject("employee", emp);
-		return modelAV;
-	}
-
-
-
     @RequestMapping ("/CompensationHistory/{id}")
     public ModelAndView vieCompensation (@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("view_compensation");
@@ -128,9 +110,34 @@ public class EmployeeController {
 		return "redirect:/";
 		}
 
-	@RequestMapping(value= "/SaveCompensation", method= RequestMethod.POST)
-		public String saveCompensation(@ModelAttribute("compensation") @Validated Compensation comp, RedirectAttributes rediAtt) {
+		@RequestMapping ("/ModifyCompensation/{id}")
+		public ModelAndView ModifyCompensationForm(@PathVariable(name = "id") Integer id) {
+			ModelAndView modelAV = new ModelAndView("modify_compensation");
+			Employee emp = service.getEmployeeId(id);
+			modelAV.addObject("employee", emp);
+			return modelAV;
+		}
+	
+		@RequestMapping ("/AddCompensation/{id}")
+		public ModelAndView ShowAddCompensationForm(@PathVariable(name = "id") Integer id) {
+			ModelAndView modelAV = new ModelAndView("add_compensation");
+			Employee emp = service.getEmployeeId(id);
+			modelAV.addObject("employee", emp);
+			Compensation comp = new Compensation();
+			modelAV.addObject("compensation", comp);
+			return modelAV;
+		}
+	
+
+	@RequestMapping(value= "/SaveCompensation/{id}", method= RequestMethod.POST)
+		public String SaveCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id, @Validated Compensation comp, RedirectAttributes rediAtt) {
+		Employee emp = service.getEmployeeId(id);
+		comp.setId_fk(emp);
 		ComService.saveCompensation(comp);
-		return "redirect:/" ;
+		System.out.println("FALLA AQKIIIIII"+ emp.getId());
+
+		return "menu_compensation";
+
+
 		}
 }
