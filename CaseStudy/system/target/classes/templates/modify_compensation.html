@@ -19,6 +19,8 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
                 <a id="buttonText" th:href="@{'/MenuCompensation/' + ${employee.id}}" class="btn mr-2">Compensation menu</a>
+
+                <a id="buttonText" th:href="@{/EmployeeControl}" class="btn mr-2"> Employee control </a>
             </ul>
         </div>
     </nav>
@@ -33,30 +35,31 @@
 
                 <!-- form -->
                 <div class="card-body">
-                    <form>
+                    <form th:action="@{'/SaveCompensation/' + ${compensation.id}}" th:object="${compensation}" method="POST">
 
                         <div class="form-group">
                             <label>Type of Compensation: </label>
-                            <input type="text" name="type" id="type" class="form-control" placeholder="salary, bonus, comission, allowance or adjustment">
+                            <input type="text" id="type" name="type" th:field="*{type}" class="form-control" readonly="readonly" required>
+
                         </div>
 
                         <div class="form-group">
                             <label>Amount: </label>
-                            <input type="number" id="amount" name="amount" class="form-control" placeholder="Insert amount">
+                            <input type="number" id="amount" name="amount" th:field="*{amount}" class="form-control" placeholder="Insert amount">
                         </div>
 
                         <div class="form-group">
                             <label>Description: </label>
-                            <textarea id="description" name="description" class="form-control" rows="5" cols="30" placeholder="Enter a description"></textarea>
+                            <textarea id="description" name="description" th:field="*{description}" class="form-control" rows="5" cols="30" placeholder="Enter a description"></textarea>
                         </div>
 
                         <div class=" form-group ">
                             <label> Compensation date: </label>
-                            <input type="text" id="date" name="date " class="form-control " placeholder="DD/MM//YYYY " required />
+                            <input type="date" id="date" name="date " class="form-control " th:field="*{date}" required>
                         </div>
 
                         <div class="box-footer">
-                            <button class="btn btn-outline-primary">Add</button>
+                            <button class="btn btn-outline-primary" type="submit">Add</button>
                         </div>
 
                     </form>
