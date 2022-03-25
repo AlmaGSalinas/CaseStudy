@@ -105,26 +105,19 @@ public class EmployeeController {
 		modelAV.addObject("employee", emp);
 		return modelAV;
 	}
-/*
-	@GetMapping("/CompensationHistory/employee/{id}")
-	public String showCompensations(Model mod){
-		mod.addAttribute("compensations", ComService.CompensationList());
-		return "view_compensation";
-	}
-	*/
+
 	@RequestMapping ("/deleteCompensation/{id}")
 	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
 		ComService.deleteCompensation(id);
-		return "redirect:/";
+		return "menu_compensation";
 		}
 
-		@RequestMapping ("/ModifyCompensation/{idCom}")
-		public ModelAndView ModifyCompensationForm( @PathVariable(name = "idCom") Integer idCom) {
+	
+		@RequestMapping ("/ModifyCompensation/employee/{id}/Compensation/{idCom}")
+		public ModelAndView ModifyCompensationForm( @PathVariable(name = "id") int id, @PathVariable (name = "idCom") int idCom) {
 			ModelAndView modelAV = new ModelAndView("modify_compensation");
-			Employee emp = new Employee();
-			modelAV.addObject("employee", emp);
-			Compensation comp = ComService.getCompensationId(idCom);
-			modelAV.addObject("compensation", comp);
+			modelAV.addObject("employee", service.getEmployeeId(id));
+			modelAV.addObject("compensation", ComService.getCompensationId(idCom));
 			return modelAV;
 		
 		}
