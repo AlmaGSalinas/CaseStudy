@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cs.system.service.CompensationService;
 import com.cs.system.service.EmployeeService;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import com.cs.system.entity.*;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService service;
+	@Autowired
     private CompensationService ComService; 
 
 	//Employees 
@@ -66,7 +68,6 @@ public class EmployeeController {
 				//the employee exists in the BD
 				return "redirect:/menu?errorEmployeeExists";
 			}
-			
 		 }else{
 			 //Birthdate invalid
 		return "redirect:/menu?errorBirthdate";	
@@ -97,11 +98,17 @@ public class EmployeeController {
 	}
 
     @RequestMapping ("/CompensationHistory/{id}")
-    public ModelAndView vieCompensation (@PathVariable(name = "id") Integer id) {
+    public ModelAndView viewCompensation (@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("view_compensation");
 		Employee emp = service.getEmployeeId(id);
 		modelAV.addObject("employee", emp);
 		return modelAV;
+	}
+
+	@GetMapping("/CompensationHistory/employee/{id}")
+	public String showCompensations(Model mod){
+		mod.addAttribute("compensations", ComService.CompensationList());
+		return "view_compensation";
 	}
 	
 	@RequestMapping ("/deleteCompensation/{id}")
@@ -116,6 +123,8 @@ public class EmployeeController {
 			Employee emp = service.getEmployeeId(id);
 			modelAV.addObject("employee", emp);
 			return modelAV;
+		
+		
 		}
 	
 		@RequestMapping ("/AddCompensation/{id}")
@@ -128,16 +137,58 @@ public class EmployeeController {
 			return modelAV;
 		}
 	
+		@RequestMapping("/SaveCompensation/{id}")
+		public String SaveCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id, @Validated Compensation comp) {
+			Employee emp = service.getEmployeeId(id);
+			comp.setId_fk(emp);
+			String CompensationType =  comp.getType();	
+			int amount = comp.getAmount();
+			 switch(CompensationType){
 
-	@RequestMapping(value= "/SaveCompensation/{id}", method= RequestMethod.POST)
-		public String SaveCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id, @Validated Compensation comp, RedirectAttributes rediAtt) {
-		Employee emp = service.getEmployeeId(id);
-		comp.setId_fk(emp);
-		ComService.saveCompensation(comp);
-		System.out.println("FALLA AQKIIIIII"+ emp.getId());
+				 case "Adjustment":
+				 if(amount<0 || amount>0){
+					ComService.saveCompensation(comp);
+					return "redirect:/MenuCompensation/{id}?success";
+				 }else{
+					return "redirect:/MenuCompensation/{id}?errorAdjustment";
+				}
 
-		return "menu_compensation";
+				case "Allowance":
+				 if(amount>0){
+					ComService.saveCompensation(comp);
+					return "redirect:/MenuCompensation/{id}?success";
+				 }else{
+					return "redirect:/MenuCompensation/{id}?errorAllowance";
+				}
 
+				case "Bonus":
+				 if(amount>0){
+					ComService.saveCompensation(comp);
+					return "redirect:/MenuCompensation/{id}?success";
+				 }else{
+					return "redirect:/MenuCompensation/{id}?errorBonus";
+				}
 
+				case "Comission":
+				 if(amount>0){
+					ComService.saveCompensation(comp);
+					return "redirect:/MenuCompensation/{id}?success";
+				 }else{
+					return "redirect:/MenuCompensation/{id}?errorComission";
+				}
+
+				case "Salary":
+				 if(amount>=0 || amount<=0){
+					ComService.saveCompensation(comp);
+					return "redirect:/MenuCompensation/{id}?success";
+				 }else{
+					return "redirect:/MenuCompensation/{id}?errorSalary";
+				}
+				
 		}
+
+		return "redirect:/MenuCompensation/{id}";
+	
 }
+}
+

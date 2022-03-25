@@ -1,5 +1,7 @@
 package com.cs.system.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +20,7 @@ public class Compensation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
  
-    @Column(name = "type", nullable = false, length = 20)
+    @Column(name = "type", nullable = false, length = 45)
     private String type;
 
     @Column(name = "amount", nullable = false)
@@ -27,8 +29,8 @@ public class Compensation {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
-    @Column(name = "date", nullable = false, length = 10)
-    private String date;
+    @Column(name = "date", nullable = false)
+    private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn (name ="id_fk", nullable = false)
@@ -68,11 +70,11 @@ public class Compensation {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -84,12 +86,11 @@ public class Compensation {
         this.id_fk = id_fk;
     }
 
-    
     //Constructors
     public Compensation() {
     }
 
-    public Compensation(int id, String type, int amount, String description, String date, Employee id_fk) {
+    public Compensation(int id, String type, int amount, String description, Date date, Employee id_fk) {
         this.id = id;
         this.type = type;
         this.amount = amount;
@@ -97,6 +98,8 @@ public class Compensation {
         this.date = date;
         this.id_fk = id_fk;
     }
+
+
 
     
     

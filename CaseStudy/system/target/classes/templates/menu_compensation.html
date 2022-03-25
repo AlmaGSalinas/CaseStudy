@@ -21,17 +21,45 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
                 <a id="buttonText" th:href="@{ '/AddCompensation/' + ${employee.id}}" class="btn mr-2"> Add Compesation </a>
-                <a id="buttonText" th:href="@{'/CompensationHistory/' + ${employee.id}}" class="btn mr-2"> View Compensations </a>
+                <a id="buttonText" th:href="@{'/CompensationHistory/employee/' + ${employee.id}}" class="btn mr-2"> View Compensations </a>
                 <a id="buttonText" th:href="@{/EmployeeControl}" class="btn mr-2"> Back to employee control </a>
 
             </ul>
         </div>
     </nav>
 
-    <!--Alerts-->
+    <!--General success alert-->
     <div th:if=${param.success}>
         <div class="alert alert-info">The compensation was successfully added to the system</div>
     </div>
+
+    <!--Adjustment error alert-->
+    <div th:if=${param.errorAdjustment}>
+        <div class="alert alert-danger"> Error: Adjustment amount can be any value except zero </div>
+    </div>
+
+    <!--Allowance error alert-->
+    <div th:if=${param.errorAllowance}>
+        <div class="alert alert-danger"> Error: Allowance amount should be greater than zero </div>
+    </div>
+
+    <!--Bonus error alert-->
+    <div th:if=${param.errorBonus}>
+        <div class="alert alert-danger"> Error: Bonus amount must be greater than zero </div>
+    </div>
+
+    <!--Comission error alert-->
+    <div th:if=${param.errorComission}>
+        <div class="alert alert-danger"> Error: Comission amount must be greater than zero </div>
+    </div>
+
+    <!--Salary error alert-->
+    <div th:if=${param.errorSalary}>
+        <div class="alert alert-danger"> Error: Salary amount not valid </div>
+    </div>
+
+
+
 
 
     <!--Carousel-->
