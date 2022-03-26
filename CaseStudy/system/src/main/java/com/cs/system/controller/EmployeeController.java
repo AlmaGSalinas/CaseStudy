@@ -109,7 +109,7 @@ public class EmployeeController {
 	@RequestMapping ("/deleteCompensation/{id}")
 	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
 		ComService.deleteCompensation(id);
-		return "menu_compensation";
+		return "redirect:/menu?deleteCompensation";
 		}
 
 	

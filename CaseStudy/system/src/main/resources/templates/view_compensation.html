@@ -55,16 +55,13 @@
 
                         <td>
 
-                            </a>
-
-                            <a th:href="@{ '/deleteCompensation/' + ${compensation.id} } class=" btn btn-outline-danger my-2 my-sm-0 ">
+                            <a th:href="@{ '/deleteCompensation/' + ${compensation.id} }" class=" btn btn-outline-danger my-2 my-sm-0 ">
                                 <i class="fas fa-solid fa-user-times "></i>
                             </a>
 
                             <a th:href="@{ '/ModifyCompensation/employee/' + ${employee.id} + '/Compensation/' + ${compensation.id}} " class="btn btn-outline-primary my-2 my-sm-0 ">
                                 <i class="fas fa-user-edit "></i>
 
-                                
                             </a>
                         </td>
                     </tr>
@@ -75,7 +72,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js "></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
         <script src="../static/functions.js "></script>
-    
+
 
     </body>
 

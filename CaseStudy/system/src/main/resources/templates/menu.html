@@ -40,6 +40,13 @@
         <div class="alert alert-danger">The employee is already exists </div>
     </div>
 
+    <!--Delete compensation alert-->
+    <div th:if=${param.deleteCompensation}>
+        <div class="alert alert-info"> The compensation was deleted</div>
+    </div>
+
+
+
     <!--Carousel-->
     <div id="carousel1" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
