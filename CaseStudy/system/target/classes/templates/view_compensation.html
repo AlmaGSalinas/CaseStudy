@@ -21,6 +21,10 @@
             <ul class="navbar-nav ml-auto">
                 <a id="buttonText" th:href="@{/EmployeeControl}" class="btn mr-2"> Employee control </a>
             </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <a id="buttonText" th:href="@{ '/MenuCompensation/' + ${employee.id}}" class="btn mr-2">Compensation menu</a>
+            </ul>
         </div>
     </nav>
 
@@ -49,7 +53,7 @@
                             <a th:href="@{'/CompensationHistory/employee/' + ${employee.id} + '/' 
                         + ${#dates.monthName(compensation.date)} + '/' + ${#dates.year(compensation.date)} }" th:text="${#dates.monthName(compensation.date)}"></a>
                         </td>
-                        <td th:text="${compensation.amount} "></td>
+                        <td th:text="${compensation.amount} "> </td>
 
                         <!-- <td>
                             <a th:href="@{ '/deleteCompensation/' + ${compensation.id} }" class="btn btn-outline-danger my-2 my-sm-0">
@@ -67,7 +71,7 @@
                     <tr>
                         <th>Total</th>
                         <th></th>
-                        <th th:text="${total}"></th>
+                        <th th:text="${total}"> </th>
                     </tr>
                 </tfoot>
             </table>
