@@ -98,13 +98,30 @@ public class EmployeeController {
 	}
 
     @RequestMapping ("/CompensationHistory/employee/{id}")
-    public ModelAndView viewCompensation (@PathVariable(name = "id") Integer id, Model mod) {
+    public ModelAndView viewCompensation (@PathVariable(name = "id") Integer id) {
 		ModelAndView modelAV = new ModelAndView("view_compensation");
-		mod.addAttribute("compensations", ComService.CompensationList());
 		Employee emp = service.getEmployeeId(id);
+		List<Compensation> compensations = ComService.CompensationList(id);
+		int total = ComService.findTotal(id);
 		modelAV.addObject("employee", emp);
+		modelAV.addObject("compensations", compensations);
+		modelAV.addObject("total", total);
 		return modelAV;
 	}
+
+	  //compensaciones por mes
+	  @RequestMapping(value="/CompensationHistory/employee/{id}/{month}/{year}", method= RequestMethod.GET)
+	  public ModelAndView viewCompensationByMonth(@PathVariable(name="id") int id, @PathVariable(name="month") String month, @PathVariable(name="year") int year) {
+		  ModelAndView modelAV = new ModelAndView("view_monthly_compensations");
+		  List<Compensation> compensations = ComService.CompensationListByMonth(id,month,year);
+		  Employee emp = service.getEmployeeId(id);
+  
+		  modelAV.addObject("compensations", compensations);
+		  modelAV.addObject("month", month);
+		  modelAV.addObject("year", year);
+		  modelAV.addObject("employee", emp);
+		  return modelAV;
+	  }
 
 	@RequestMapping ("/deleteCompensation/{id}")
 	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
