@@ -58,6 +58,11 @@
         <div class="alert alert-danger"> Error: Salary amount not valid </div>
     </div>
 
+    <!--Error, compensation exists-->
+    <div th:if=${param.errorExists}>
+        <div class="alert alert-danger"> Error: Compensation already exists </div>
+    </div>
+
 
     <!--Carousel-->
     <div id="carousel1 " class="carousel slide carousel-fade " data-ride="carousel ">

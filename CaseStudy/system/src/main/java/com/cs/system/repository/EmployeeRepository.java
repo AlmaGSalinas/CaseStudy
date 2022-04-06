@@ -20,12 +20,5 @@ public interface EmployeeRepository extends JpaRepository <Employee, Integer> {
     List<Employee> searchEmployee(@Param("firstname") String FN,  @Param("lastname")String LN, @Param("position")String PO);
    
     Employee findEmployeeByFirstnameAndMiddlenameAndLastnameAndBirthdate(String firstname, String middlename, String lastname, String birthdate);
-   /*
-    @Query(value = "SELECT Firstname, MiddleName, Lastname, Birthdate FROM Employees"
-    + " WHERE (Firstname = :FN)"
-    + " AND (Middlename = :MN)"
-    + " AND (Lastname = :LN)"
-    + " AND (Birthdate = :BD)", nativeQuery = true)
-    List<Employee> obtainInfo(@Param("Firstname") String FN, @Param("Middlname") String MN, @Param("Lastname") String LN, @Param("Birthdate")String BD);
-    */
+   
 }

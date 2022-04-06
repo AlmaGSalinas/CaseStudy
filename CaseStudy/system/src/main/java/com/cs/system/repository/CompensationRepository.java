@@ -27,4 +27,7 @@ public interface CompensationRepository extends JpaRepository <Compensation, Int
 	@Query(value = "SELECT * FROM Compensation"
 		+ "WHERE id_fk  = :Id_fk ORDER BY date ASC",  nativeQuery=true)
 		List<Compensation> findCompensationsById_fk(@Param("id_fk") int Id_fk);
+
+	Compensation findCompensationByTypeAndDescriptionAndAmount (String type, String description, int amount);
+   
 }

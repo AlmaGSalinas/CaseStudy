@@ -124,16 +124,14 @@ public class EmployeeController {
 		  return modelAV;
 	  }
 
-
-
 	@RequestMapping ("/deleteCompensation/{id}")
 	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
 		ComService.deleteCompensation(id);
 		return "redirect:/menu?deleteCompensation";
 		}
 
-	
-		@RequestMapping ("/ModifyCompensation/employee/{id}/Compensation/{idCom}")
+
+	@RequestMapping ("/ModifyCompensation/employee/{id}/Compensation/{idCom}")
 		public ModelAndView ModifyCompensationForm( @PathVariable(name = "id") int id, @PathVariable (name = "idCom") int idCom) {
 			ModelAndView modelAV = new ModelAndView("modify_compensation");
 			modelAV.addObject("employee", service.getEmployeeId(id));
@@ -142,7 +140,7 @@ public class EmployeeController {
 		
 		}
 	
-		@RequestMapping ("/AddCompensation/{id}")
+	@RequestMapping ("/AddCompensation/{id}")
 		public ModelAndView ShowAddCompensationForm(@PathVariable(name = "id") Integer id) {
 			ModelAndView modelAV = new ModelAndView("add_compensation");
 			Employee emp = service.getEmployeeId(id);
@@ -152,13 +150,15 @@ public class EmployeeController {
 			return modelAV;
 		}
 	
-		@RequestMapping("/SaveCompensation/{id}")
+	@RequestMapping("/SaveCompensation/{id}")
 		public String SaveCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id, @Validated Compensation comp) {
 			Employee emp = service.getEmployeeId(id);
 			comp.setId_fk(emp);
 			String CompensationType =  comp.getType();	
 			int amount = comp.getAmount();
-			 switch(CompensationType){
+
+			if(ComService.verifyExistsCompensation(comp)==false){
+			switch(CompensationType){
 
 				 case "Adjustment":
 				 if(amount<0 || amount>0){
@@ -201,62 +201,81 @@ public class EmployeeController {
 				}
 				
 		}
-
 		return "redirect:/MenuCompensation/{id}";
-	
-}
 
-@RequestMapping("/SaveModification/employee/{id}/compensation/{idCom}")
-public String saveModifyCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id,  @PathVariable(name = "idCom") Integer idCom, @Validated Compensation comp, Model mod) {
+	}else{
+		return "redirect:/MenuCompensation/{id}?errorExists";
+	}
+} 
+
+    //MODIFICA LA COMPENSACIÓN
+	@RequestMapping("/SaveModification/employee/{id}/compensation/{idCom}")
+	public String saveModifyCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id,  @PathVariable(name = "idCom") Integer idCom, @Validated Compensation comp, RedirectAttributes rediAtt, Model mod) {
 	Employee emp = service.getEmployeeId(id);
-	Compensation compensation = ComService.getCompensationId(idCom);
-	mod.addAttribute("compensation", compensation);
+
+	Compensation Existingcompensation = ComService.getCompensationId(idCom);
+	Existingcompensation.setAmount(comp.getAmount());
+	Existingcompensation.setDescription(comp.getDescription());
+	
+	mod.addAttribute("compensation", Existingcompensation);
 	comp.setId_fk(emp);
 	String CompensationType =  comp.getType();	
 	int amount = comp.getAmount();
-	 switch(CompensationType){
+	if(ComService.verifyExistsCompensation(comp)==false){
 
-		 case "Adjustment":
-		 if(amount<0 || amount>0){
-			ComService.saveCompensation(comp);
-			return "redirect:/MenuCompensation/{id}?success";
-		 }else{
-			return "redirect:/MenuCompensation/{id}?errorAdjustment";
-		}
+		switch(CompensationType){
 
-		case "Allowance":
-		 if(amount>0){
-			ComService.saveCompensation(comp);
-			return "redirect:/MenuCompensation/{id}?success";
-		 }else{
-			return "redirect:/MenuCompensation/{id}?errorAllowance";
-		}
+			case "Adjustment":
+			if(amount<0 || amount>0){
+			
+				ComService.updateCompensation(Existingcompensation);
 
-		case "Bonus":
-		 if(amount>0){
-			ComService.saveCompensation(comp);
-			return "redirect:/MenuCompensation/{id}?success";
-		 }else{
-			return "redirect:/MenuCompensation/{id}?errorBonus";
-		}
-
-		case "Comission":
-		 if(amount>0){
-			ComService.saveCompensation(comp);
-			return "redirect:/MenuCompensation/{id}?success";
-		 }else{
-			return "redirect:/MenuCompensation/{id}?errorComission";
-		}
-
-		case "Salary":
-		 if(amount>=0 || amount<=0){
-			ComService.saveCompensation(comp);
-			return "redirect:/MenuCompensation/{id}?success";
-		 }else{
-			return "redirect:/MenuCompensation/{id}?errorSalary";
-		}
+			   return "redirect:/MenuCompensation/{id}?success";
+			}else{
+			   return "redirect:/MenuCompensation/{id}?errorAdjustment";
+		   }
+   
+		   case "Allowance":
+			if(amount>0){
+			
+			  ComService.updateCompensation(Existingcompensation);
+			   return "redirect:/MenuCompensation/{id}?success";
+			}else{
+			   return "redirect:/MenuCompensation/{id}?errorAllowance";
+		   }
+   
+		   case "Bonus":
+			if(amount>0){
+			
+				ComService.updateCompensation(Existingcompensation);
+			   return "redirect:/MenuCompensation/{id}?success";
+			}else{
+			   return "redirect:/MenuCompensation/{id}?errorBonus";
+		   }
+   
+		   case "Comission":
+			if(amount>0){
 		
-}
+				ComService.updateCompensation(Existingcompensation);
+			   return "redirect:/MenuCompensation/{id}?success";
+			}else{
+			   return "redirect:/MenuCompensation/{id}?errorComission";
+		   }
+   
+		   case "Salary":
+			if(amount>=0 || amount<=0){
+			
+				ComService.updateCompensation(Existingcompensation);
+			   return "redirect:/MenuCompensation/{id}?success";
+			}else{
+			   return "redirect:/MenuCompensation/{id}?errorSalary";
+		   }
+		   
+   }			
+	}else{
+		return "redirect:/MenuCompensation/{id}?errorExists";
+	}
+	 
 
 return "redirect:/MenuCompensation/{id}";
 

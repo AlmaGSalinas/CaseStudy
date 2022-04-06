@@ -1,5 +1,6 @@
 package com.cs.system.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cs.system.entity.Compensation;
@@ -29,6 +30,10 @@ public class CompensationService {
     public void saveCompensation(Compensation compensation) {
          repo.save(compensation);
     }
+
+    public Compensation updateCompensation(Compensation compensation) {
+       return repo.save(compensation);
+   }
     
     public Compensation getCompensationId (int id) {
         return repo.findById(id).get();
@@ -42,4 +47,18 @@ public class CompensationService {
         return repo.findCompensationsById_fk(Id_fk);
 
     }
+    public Boolean verifyExistsCompensation (Compensation comp){
+		String type = comp.getType();
+		int amount = comp.getAmount();
+		String description = comp.getDescription();
+
+		Compensation objComp = repo.findCompensationByTypeAndDescriptionAndAmount(type, description, amount);
+
+		if(objComp!=null){
+			return true;
+		}else{
+			return false;
+		}
+		
+}
 }    
