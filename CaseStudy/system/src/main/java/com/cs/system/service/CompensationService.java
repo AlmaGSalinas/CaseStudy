@@ -37,4 +37,9 @@ public class CompensationService {
     public void deleteCompensation(int id) {
         repo.deleteById(id);
     }
+
+    public List<Compensation> findCompensationsById_fk(int Id_fk){
+        return repo.findCompensationsById_fk(Id_fk);
+
+    }
 }    

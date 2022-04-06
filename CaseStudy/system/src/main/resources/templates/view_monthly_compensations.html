@@ -18,8 +18,11 @@
         <h1 style="color: white;" class="ml-2 mr-2">Human Resources</h1>
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
             <ul class="navbar-nav ml-auto">
-                <a id="buttonText" th:href="@{/EmployeeControl}" class="btn mr-2"> Employee control </a>
+                <a id="buttonText" th:href="@{'/CompensationHistory/employee/' + ${employee.id}}" class="btn mr-2"> View Compensations </a>
+
+                <a id="buttonText" th:href="@{ '/MenuCompensation/' + ${employee.id}}" class="btn mr-2">Compensation menu</a>
             </ul>
         </div>
     </nav>
@@ -38,19 +41,20 @@
 
                     <tr>
                         <th>ID</th>
-                        <th>Details</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Date</th>
                         <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="compensation : ${compensations} ">
                         <td th:text="${compensation.id}"></td>
-                        <td>
-                            <b><span th:text="${compensation.type}"></span></b>
-                            <p>$ <span th:text="${compensation.amount}"></span></p>
-                            <p><span th:text="${compensation.description}"></span></p>
-                            <p><span th:text="${compensation.date}"></span></p>
-                        </td>
+                        <td th:text="${compensation.type}"></td>
+                        <td th:text="${compensation.amount}"></td>
+                        <td th:text="${compensation.description}"></td>
+                        <td th:text="${compensation.date}"></td>
 
                         <td>
                             <a th:href="@{ '/deleteCompensation/' + ${compensation.id} }" class="btn btn-outline-danger my-2 my-sm-0">

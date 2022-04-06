@@ -25,6 +25,7 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService service;
+
 	@Autowired
     private CompensationService ComService; 
 
@@ -123,6 +124,8 @@ public class EmployeeController {
 		  return modelAV;
 	  }
 
+
+
 	@RequestMapping ("/deleteCompensation/{id}")
 	    public String DeleteCompensation(@PathVariable(name = "id") Integer id){
 		ComService.deleteCompensation(id);
@@ -201,6 +204,62 @@ public class EmployeeController {
 
 		return "redirect:/MenuCompensation/{id}";
 	
+}
+
+@RequestMapping("/SaveModification/employee/{id}/compensation/{idCom}")
+public String saveModifyCompensation(@ModelAttribute("compensation") @PathVariable(name = "id") Integer id,  @PathVariable(name = "idCom") Integer idCom, @Validated Compensation comp, Model mod) {
+	Employee emp = service.getEmployeeId(id);
+	Compensation compensation = ComService.getCompensationId(idCom);
+	mod.addAttribute("compensation", compensation);
+	comp.setId_fk(emp);
+	String CompensationType =  comp.getType();	
+	int amount = comp.getAmount();
+	 switch(CompensationType){
+
+		 case "Adjustment":
+		 if(amount<0 || amount>0){
+			ComService.saveCompensation(comp);
+			return "redirect:/MenuCompensation/{id}?success";
+		 }else{
+			return "redirect:/MenuCompensation/{id}?errorAdjustment";
+		}
+
+		case "Allowance":
+		 if(amount>0){
+			ComService.saveCompensation(comp);
+			return "redirect:/MenuCompensation/{id}?success";
+		 }else{
+			return "redirect:/MenuCompensation/{id}?errorAllowance";
+		}
+
+		case "Bonus":
+		 if(amount>0){
+			ComService.saveCompensation(comp);
+			return "redirect:/MenuCompensation/{id}?success";
+		 }else{
+			return "redirect:/MenuCompensation/{id}?errorBonus";
+		}
+
+		case "Comission":
+		 if(amount>0){
+			ComService.saveCompensation(comp);
+			return "redirect:/MenuCompensation/{id}?success";
+		 }else{
+			return "redirect:/MenuCompensation/{id}?errorComission";
+		}
+
+		case "Salary":
+		 if(amount>=0 || amount<=0){
+			ComService.saveCompensation(comp);
+			return "redirect:/MenuCompensation/{id}?success";
+		 }else{
+			return "redirect:/MenuCompensation/{id}?errorSalary";
+		}
+		
+}
+
+return "redirect:/MenuCompensation/{id}";
+
 }
 }
 

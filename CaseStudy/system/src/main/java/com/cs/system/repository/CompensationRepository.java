@@ -17,11 +17,14 @@ public interface CompensationRepository extends JpaRepository <Compensation, Int
    
     //Compensation findCompensationById_fkAndDate(String id_fk, String date);
     
-	@Query(value="SELECT * FROM Compensation WHERE MONTHNAME(date) = :month and id_fk = :Id_fk and YEAR(date) = :year", nativeQuery=true)
+	@Query(value="SELECT * FROM Compensation WHERE MONTHNAME(date) = :month AND id_fk = :Id_fk AND YEAR(date) = :year", nativeQuery=true)
 	List<Compensation> listCompensationByMonth(@Param("id_fk") int Id_fk, @Param("month") String month, @Param("year") int year);
     
  
 	@Query(value="SELECT SUM(amount) as total FROM Compensation WHERE (id_fk = :Id_fk )", nativeQuery=true)
 	Integer findTotal(@Param("id_fk") int Id_fk);
 	
+	@Query(value = "SELECT * FROM Compensation"
+		+ "WHERE id_fk  = :Id_fk ORDER BY date ASC",  nativeQuery=true)
+		List<Compensation> findCompensationsById_fk(@Param("id_fk") int Id_fk);
 }
